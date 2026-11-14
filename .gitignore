@@ -1,0 +1,45 @@
+# === Rider/ReSharper/Visual Studio ===
+.idea/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# === Build output ===
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+[Ll]og/
+[Ll]ogs/
+msbuild.log
+artifacts/
+publish/
+
+# === NuGet ===
+*.nupkg
+*.snupkg
+packages/
+!packages/build/
+
+# === Test results ===
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.coverage
+*.coveragexml
+coverage*.json
+coverage*.xml
+coverage*.info
+
+# === Miscellaneous ===
+*.tmp
+*.cache
+*.log
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# === Project-specific ===
+# Local agent instructions (build/verification notes), not for the repo
+AGENTS.md
