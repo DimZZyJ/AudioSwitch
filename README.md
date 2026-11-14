@@ -42,3 +42,34 @@ dotnet run --project AudioSwitch
 
 Требования: Windows 10/11, .NET 9 SDK. Иконки (`Assets/app.ico`, `Assets/logo.png`)
 уже включены в проект.
+
+## Сборка инсталятора
+
+```powershell
+.\build-installer.ps1
+```
+
+Скрипт публикует self-contained сборку `win-x64` (пользователю не нужен
+установленный .NET) и компилирует установщик Inno Setup 6 из `installer\AudioSwitch.iss`.
+Результат — `dist\AudioSwitch-<версия>-x64-setup.exe`; версия берётся из `<Version>` в csproj.
+Реквизиты (версия, архитектура) прокидываются в `.iss` через `/D`-определения.
+
+Требования: Inno Setup 6 — `winget install --id JRSoftware.InnoSetup`
+(скрипт находит `ISCC.exe` по реестру и типовым путям, включая per-user установку).
+
+Особенности установщика:
+
+- Установка в профиль без UAC (`{autopf}` → `AppData\Local\Programs\AudioSwitch`),
+  повышение через диалог/`/ALLUSERS` опционально.
+- Рус/англ языки, ярлык в меню Пуск (+ опционально на рабочем столе), запись
+  «Программы и компоненты», завершение запущенного экземпляра из папки установки
+  перед копированием файлов, запуск по завершении мастера.
+- При удалении чистит значение `AudioSwitch` в `HKCU\...\Run` (только если оно
+  указывает на удаляемую папку) и предлагает удалить `%APPDATA%\AudioSwitch`
+  с настройками.
+- Флаг `-FrameworkDependent` — облегчённый установщик под уже установленный
+  .NET 9 Desktop Runtime; `-Version`, `-Architecture`, `-Configuration` — параметры сборки.
+
+`build-installer.ps1` и `installer\AudioSwitch.iss` должны оставаться в кодировке
+UTF-8 **с BOM** (иначе PowerShell 5.1 и ISCC портят кириллицу).
+

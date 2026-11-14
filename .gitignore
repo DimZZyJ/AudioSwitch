@@ -16,6 +16,7 @@
 msbuild.log
 artifacts/
 publish/
+dist/
 
 # === NuGet ===
 *.nupkg
